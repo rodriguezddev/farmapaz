@@ -1,0 +1,5 @@
+export { default as MainInput } from './mainInput/MainInput'
+export { default as InputDashboard } from './inputDashboard/inputDashboard/InputDashboard'
+export { default as SelectFilter } from './inputDashboard/selectFilter/SelectFilter'
+export { default as SelectInput } from './inputDashboard/selectInput/SelectInput'
+export { default as TextArea } from './inputDashboard/textArea/TextArea'
