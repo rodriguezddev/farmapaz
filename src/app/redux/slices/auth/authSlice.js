@@ -12,7 +12,7 @@ const initialState = {
 
 export const login = createAsyncThunk('auth/login', async (data, thunkAPI) => {
   try {
-    const response = await httpService.post('/auth/log-in', data)
+    const response = await httpService.post('/api/auth/local/register?populate=role', data)
 
     return response
   } catch (error) {
@@ -31,81 +31,6 @@ export const signup = createAsyncThunk(
       return {
         data: { ...response.data, password: data.password },
       }
-    } catch (error) {
-      const message = error
-
-      return thunkAPI.rejectWithValue(message)
-    }
-  },
-)
-
-export const getUrlActive = createAsyncThunk(
-  'auth/getUrlActive',
-  async (params) => {
-    try {
-      const response = await fetch(params, {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET',
-        mode: 'no-cors',
-        'Content-Type': 'application/json',
-        credentials: 'include',
-      })
-
-      if (response) {
-        return true
-      }
-
-      return false
-    } catch (err) {
-      return false
-    }
-  },
-)
-
-export const validateCode = createAsyncThunk(
-  'auth/validateCode',
-  async (data, thunkAPI) => {
-    const {
-      auth: { user },
-    } = thunkAPI.getState()
-    const loginInfo = {
-      email: user.email,
-      password: user.password,
-      partner_code: user.partner.code,
-    }
-
-    try {
-      const response = await httpService.post('/auth/validate-otp', data)
-
-      await thunkAPI.dispatch(
-        getUrlActive(
-          `https://${user.partner.code}${import.meta.env.REACT_APP_DOMAIN_BASE}`,
-        ),
-      )
-
-      await thunkAPI.dispatch(login(loginInfo))
-
-      return response
-    } catch (error) {
-      const message = error
-
-      return thunkAPI.rejectWithValue(message)
-    }
-  },
-)
-
-export const getPartnerInfo = createAsyncThunk(
-  'auth/me',
-  async (_, thunkAPI) => {
-    const state = thunkAPI.getState()
-
-    try {
-      const response = await httpService.getLogInfo(
-        '/auth/me',
-        state.auth.user.token,
-      )
-
-      return response
     } catch (error) {
       const message = error
 
@@ -182,23 +107,6 @@ export const authSlice = createSlice({
 
     builder.addCase(signup.fulfilled, (state, action) => {
       state.user = action.payload.data
-    })
-
-    builder.addCase(validateCode.fulfilled, (state, action) => {
-      state.user = { ...state.user, ...action.payload.data }
-    })
-
-    builder.addCase(getUrlActive.fulfilled, (state, action) => {
-      state.isUrlActive = action.payload
-    })
-
-    builder.addCase(getUrlActive.rejected, (state) => {
-      state.isUrlActive = false
-    })
-
-    builder.addCase(getPartnerInfo.fulfilled, (state, action) => {
-      state.user = { ...state.user, ...action.payload.data }
-      state.partnerCode = action.payload.data.partner.code
     })
 
     builder.addCase(updateProfile.fulfilled, (state, action) => {

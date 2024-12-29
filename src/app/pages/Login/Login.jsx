@@ -15,7 +15,7 @@ import { MainInput } from "../../components/inputs";
 import { Paper } from "../../components/paper";
 import { MainButton } from "../../components/buttons";
 import { getEmailPattern } from "../../utils/utilsValidations";
-import { getPartnerInfo, login } from "../../redux/slices/auth/authSlice";
+import { login } from "../../redux/slices/auth/authSlice";
 import { routes } from "../../constants/routesConstants";
 import { getPartnerUrl } from "../../utils/utilsGetInfo";
 import logoSf from "../../assets/images/logo-sf.png";

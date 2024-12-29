@@ -1,4 +1,5 @@
 import { loadState } from '../../utils/utilsLocalStorage'
+import { STRAPI } from '../../constants/servicesConstants'
 
 class HttpService {
   get = (path) => {
@@ -7,7 +8,7 @@ class HttpService {
       headers: this.getHeaders(),
     }
 
-    return fetch(`${import.meta.env.REACT_APP_API_URL}${path}`, requestOptions)
+    return fetch(`${STRAPI}${path}`, requestOptions)
       .then((response) => this.handleResponse(response))
       .then((response) => response)
   }
@@ -19,7 +20,7 @@ class HttpService {
       body: isForm ? data : JSON.stringify(data),
     }
 
-    return fetch(`${import.meta.env.REACT_APP_API_URL}${path}`, requestOptions)
+    return fetch(`${STRAPI}${path}`, requestOptions)
       .then((response) => this.handleResponse(response))
       .then((response) => response)
   }
@@ -31,7 +32,7 @@ class HttpService {
       body: JSON.stringify(data),
     }
 
-    return fetch(`${import.meta.env.REACT_APP_API_URL}${path}`, requestOptions)
+    return fetch(`${STRAPI}${path}`, requestOptions)
       .then((response) => this.handleResponse(response))
       .then((response) => response)
   }
@@ -43,7 +44,7 @@ class HttpService {
       body: JSON.stringify(data),
     }
 
-    return fetch(`${import.meta.env.REACT_APP_API_URL}${path}`, requestOptions)
+    return fetch(`${STRAPI}${path}`, requestOptions)
       .then((response) => this.handleResponse(response))
       .then((response) => response)
   }
@@ -55,7 +56,7 @@ class HttpService {
       body: JSON.stringify(data),
     }
 
-    return fetch(`${import.meta.env.REACT_APP_API_URL}${path}`, requestOptions)
+    return fetch(`${STRAPI}${path}`, requestOptions)
       .then((response) => this.handleResponse(response))
       .then((response) => response)
   }
@@ -71,7 +72,7 @@ class HttpService {
       },
     }
 
-    return fetch(`${import.meta.env.REACT_APP_API_URL}${path}`, requestOptions)
+    return fetch(`${STRAPI}${path}`, requestOptions)
       .then((response) => this.handleResponse(response))
       .then((response) => response)
   }
